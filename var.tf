@@ -87,20 +87,23 @@ variable "aca-app-min-count" {
 
 variable "is_aca_enabled" {
   type = bool
-  default = false
+  default = true
 }
 
 variable "dify-api-image" {
   type = string
-  default = "langgenius/dify-api:main"
+  #default = "langgenius/dify-api:main"
+  default = "langgenius/dify-api:0.7.1"
 }
 
 variable "dify-sandbox-image" {
   type = string
-  default = "langgenius/dify-sandbox:main"
+  #default = "langgenius/dify-sandbox:main"
+  default = "langgenius/dify-sandbox:0.2.6"
 }
 
 variable "dify-web-image" {
   type = string
-  default = "langgenius/dify-web:main"
+  #default = "langgenius/dify-web:main"
+  default = "langgenius/dify-web:0.7.1"
 }
