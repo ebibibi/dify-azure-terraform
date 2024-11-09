@@ -1,12 +1,12 @@
 
 
 resource "azurerm_resource_group" "rg" {
-  name     = "rg-${var.region}"
+  name     = "rg-${var.resourcegroup-name}"
   location = var.region
 }
 
 resource "azurerm_virtual_network" "vnet" {
-  name                = "vnet-${var.region}"
+  name                = "vnet-${var.resourcegroup-name}"
   address_space       = ["${var.ip-prefix}.0.0/16"]
   location            = var.region
   resource_group_name = azurerm_resource_group.rg.name

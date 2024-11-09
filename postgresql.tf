@@ -1,5 +1,5 @@
 # resource "azurerm_resource_group" "postgres" {
-#   name     = "rg-${var.region}-postgres"
+#   name     = "rg-${var.resourcegroup-name}-postgres"
 #   location = var.region
 # }
 

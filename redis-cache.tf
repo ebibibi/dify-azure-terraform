@@ -1,6 +1,6 @@
 #create resource group for redis cache
 # resource "azurerm_resource_group" "redis" {
-#   name     = "rg-${var.region}-redis"
+#   name     = "rg-${var.resourcegroup-name}-redis"
 #   location = var.region
 # }
 
