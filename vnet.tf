@@ -1,5 +1,3 @@
-
-
 resource "azurerm_resource_group" "rg" {
   name     = "rg-${var.resourcegroup-name}"
   location = var.region
@@ -11,7 +9,6 @@ resource "azurerm_virtual_network" "vnet" {
   location            = var.region
   resource_group_name = azurerm_resource_group.rg.name
 }
-
 
 resource "azurerm_subnet" "privatelinksubnet" {
   name                 = "PrivateLinkSubnet"
@@ -34,7 +31,6 @@ resource "azurerm_subnet" "acasubnet" {
       actions = ["Microsoft.Network/virtualNetworks/subnets/join/action"]
     }
   }
-
 }
 
 resource "azurerm_subnet" "postgressubnet" {
@@ -43,17 +39,13 @@ resource "azurerm_subnet" "postgressubnet" {
   virtual_network_name = azurerm_virtual_network.vnet.name
   address_prefixes     = ["${var.ip-prefix}.2.0/24"]
   service_endpoints    = ["Microsoft.Storage"]
+
   delegation {
     name = "postgres-delegation"
 
     service_delegation {
-      name = "Microsoft.DBforPostgreSQL/flexibleServers"
-      actions = [
-        "Microsoft.Network/virtualNetworks/subnets/join/action",
-      ]
+      name    = "Microsoft.DBforPostgreSQL/flexibleServers"
+      actions = ["Microsoft.Network/virtualNetworks/subnets/join/action"]
     }
   }
-
 }
-
-
