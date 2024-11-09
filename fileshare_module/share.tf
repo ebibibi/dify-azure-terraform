@@ -10,43 +10,39 @@ data "local_file" "files" {
 }
 
 locals {
-  directories = compact(distinct(sort([
-    for f in data.local_file.files : 
-    replace(dirname(f.filename), var.local_mount_dir, ".") 
-    if dirname(f.filename) != var.local_mount_dir && dirname(f.filename) != "."
-  ])))
+  # ファイルの相対パスを取得
+  relative_paths = {
+    for f in data.local_file.files :
+    f.filename => replace(replace(f.filename, "${var.local_mount_dir}/", ""), "\\", "/")
+  }
 }
 
 locals {
-  root_files = { for f in data.local_file.files : f.filename => f if dirname(f.filename) == var.local_mount_dir }
-  subdir_files = { for f in data.local_file.files : f.filename => f if dirname(f.filename) != var.local_mount_dir }
+  # ディレクトリのリストを作成
+  all_directories = distinct(sort([
+    for path in local.relative_paths : dirname(path)
+    if dirname(path) != "."
+  ]))
 }
 
+# ディレクトリの作成
 resource "azurerm_storage_share_directory" "directories" {
-  for_each              = toset(local.directories)
-  name                  = each.value
+  for_each = toset(local.all_directories)
+  name     = each.value
   storage_share_id = azurerm_storage_share.fileshare.id
+  depends_on       = [azurerm_storage_share.fileshare]
 }
 
-resource "azurerm_storage_share_file" "root_files" {
-  for_each = local.root_files
+# ファイルの作成
+resource "azurerm_storage_share_file" "files" {
+  for_each = data.local_file.files
 
-  name             = basename(each.value.filename)
-  storage_share_id = azurerm_storage_share.fileshare.id
-  source           = each.value.filename
-  depends_on       = [azurerm_storage_share_directory.directories]
-}
-
-resource "azurerm_storage_share_file" "subdir_files" {
-  for_each = local.subdir_files
-
-  name             = basename(each.value.filename)
+  name             = local.relative_paths[each.value.filename]
   storage_share_id = azurerm_storage_share.fileshare.id
   source           = each.value.filename
-  path             = trimprefix(dirname(each.value.filename), "${var.local_mount_dir}/")
+
   depends_on       = [azurerm_storage_share_directory.directories]
 }
-
 
 output "share_name" {
   value       = azurerm_storage_share.fileshare.name
