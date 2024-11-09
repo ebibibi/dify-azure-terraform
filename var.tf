@@ -6,7 +6,7 @@ variable "subscription-id" {
 #virtual network variables
 variable "resourcegroup-name" {
   type = string
-  default = "dify-rg"
+  default = "dify"
 }
 
 variable "region" {
@@ -92,18 +92,18 @@ variable "is_aca_enabled" {
 
 variable "dify-api-image" {
   type = string
-  #default = "langgenius/dify-api:main"
-  default = "langgenius/dify-api:0.7.1"
+  default = "langgenius/dify-api:main"
+  #default = "langgenius/dify-api:0.7.1"
 }
 
 variable "dify-sandbox-image" {
   type = string
-  #default = "langgenius/dify-sandbox:main"
-  default = "langgenius/dify-sandbox:0.2.6"
+  default = "langgenius/dify-sandbox:main"
+  #default = "langgenius/dify-sandbox:0.2.6"
 }
 
 variable "dify-web-image" {
   type = string
-  #default = "langgenius/dify-web:main"
-  default = "langgenius/dify-web:0.7.1"
+  default = "langgenius/dify-web:main"
+  #default = "langgenius/dify-web:0.7.1"
 }
