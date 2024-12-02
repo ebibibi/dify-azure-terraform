@@ -18,3 +18,6 @@ provider "azurerm" {
     features {}
 }
 
+provider "azuread" {
+  # 必要に応じて設定を追加
+}

@@ -49,3 +49,10 @@ resource "azurerm_subnet" "postgressubnet" {
     }
   }
 }
+
+resource "azurerm_subnet" "appgw_subnet" {
+  name                 = "AppGatewaySubnet"
+  resource_group_name  = azurerm_resource_group.rg.name
+  virtual_network_name = azurerm_virtual_network.vnet.name
+  address_prefixes     = ["${var.ip-prefix}.4.0/24"]
+}

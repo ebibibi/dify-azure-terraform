@@ -1,3 +1,6 @@
+variable "tenant_id" {
+  default = "7b54e7bc-acb0-4a9b-ad82-7421b9e4e2d9"
+}
 variable "subscription-id" {
   type = string
   default = "b0f2ddcb-c22b-4728-89b3-26e90a494ae4"
@@ -6,7 +9,7 @@ variable "subscription-id" {
 #virtual network variables
 variable "resourcegroup-name" {
   type = string
-  default = "dify"
+  default = "dify-withauth"
 }
 
 variable "region" {
