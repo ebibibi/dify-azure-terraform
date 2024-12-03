@@ -11,6 +11,7 @@ resource "azurerm_container_app_environment" "dify-aca-env" {
   name                       = var.aca-env
   location                   = azurerm_resource_group.rg.location
   resource_group_name        = azurerm_resource_group.rg.name
+  infrastructure_resource_group_name = "ME_dify-aca-env_rg-${var.resourcegroup-name}_${var.region}"
   log_analytics_workspace_id = azurerm_log_analytics_workspace.aca-loga.id
   infrastructure_subnet_id = azurerm_subnet.acasubnet.id
   workload_profile  {
