@@ -14,24 +14,11 @@ module "openai_cognitive_service" {
   }
 }
 
+# Reference the created Cognitive Services account
 data "azurerm_cognitive_account" "openai_service" {
   name                = module.openai_cognitive_service.name
   resource_group_name = azurerm_resource_group.rg.name
-
-  depends_on = [module.openai_cognitive_service]
 }
-
-resource "azurerm_cognitive_account" "openai_service_network" {
-  name                = module.openai_cognitive_service.name
-  resource_group_name = azurerm_resource_group.rg.name
-  location            = azurerm_resource_group.rg.location
-  kind                = "OpenAI"
-  sku_name            = "S0"  # Use the appropriate SKU
-  public_network_access_enabled = false
-
-  depends_on = [module.openai_cognitive_service]
-}
-
 
 resource "azurerm_private_endpoint" "openai_private_endpoint" {
   name                = "openai-private-endpoint"
@@ -45,6 +32,8 @@ resource "azurerm_private_endpoint" "openai_private_endpoint" {
     subresource_names              = ["account"]  # Confirm if "account" is the correct subresource name
     is_manual_connection           = false
   }
+
+  depends_on = [module.openai_cognitive_service]
 }
 
 resource "azurerm_private_dns_zone" "private_dns_zone" {
