@@ -1,6 +1,6 @@
 variable "subscription-id" {
   type = string
-  default = "b0f2ddcb-c22b-4728-89b3-26e90a494ae4"
+  default = "c3e7927d-ef24-40a6-ae17-a8aef19d1ac9"
 }
 
 #virtual network variables
@@ -77,7 +77,7 @@ variable "aca-cert-password" {
 
 variable "aca-dify-customer-domain" {
   type = string
-  default = "dify.nikadwang.com"
+  default = "dify.mubik.co.jp"
 }
 
 variable "aca-app-min-count" {
