@@ -3,12 +3,12 @@ $acrName = "youracrname"   # ここにAzure Container Registryの名前を指定
 $resourceGroup = "yourResourceGroup"  # ここにリソースグループ名を指定
 
 # Azureにログイン（未ログイン時）
-if (-not (Get-AzContext)) {
-    Connect-AzAccount
+if (-not (az account show --query id --output tsv)) {
+    az login
 }
 
 # ACRのログインサーバー取得
-$acrLoginServer = (Get-AzContainerRegistry -ResourceGroupName $resourceGroup -Name $acrName).LoginServer
+$acrLoginServer = az acr show --name $acrName --resource-group $resourceGroup --query loginServer --output tsv
 
 # ACRにログイン
 az acr login --name $acrName
